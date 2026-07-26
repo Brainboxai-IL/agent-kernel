@@ -28,7 +28,7 @@ The provenance is honest. These rules were distilled from the working behavior o
 
 ## Measured, not promised
 
-We ran the transcript-runnable probes on five models from five families: a local qwen3-4b, GPT-5.5, Llama-3.3-70B, DeepSeek-v3.1 and Gemma-3-27B, with and without the coding profile. Every model scored higher with the kernel. Baseline prompts failed the same way everywhere: reports that bury the verdict, "all working" over failing tests, one model that deleted a directory it was told was empty and wasn't. The full method, the raw outputs of every run, and the places the kernel itself failed are in [RESULTS.md](RESULTS.md).
+We ran the transcript-runnable probes on eight models from eight families, including the three most-used models on OpenRouter this week, with and without the coding profile. Every model scored higher with the kernel. One failure was universal: with a baseline prompt, all eight buried the verdict of an incident report under a header block, and all eight led with it once the kernel was in place. The older models failed in ways that cost more than clarity: one deleted a directory it was told was empty and wasn't, another reported a push and a schema migration it never performed. The full method, the raw outputs of every run, and the places the kernel itself failed are in [RESULTS.md](RESULTS.md).
 
 <p align="center">
   <img src="./assets/readme/evals-benchmark.svg" width="100%"
