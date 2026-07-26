@@ -5,15 +5,15 @@ Env: EVAL_API (default http://localhost:1234/v1/chat/completions), EVAL_MODEL.
 Writes results.json next to this script. Grade the outputs per EVALS.md.
 """
 import json
+import os
+import pathlib
 import time
 import urllib.request
 
-import os
 API = os.environ.get("EVAL_API", "http://localhost:1234/v1/chat/completions")
 MODEL = os.environ.get("EVAL_MODEL", "qwen3-4b-instruct-2507")
-KERNEL = open(
-    "C:\\Users\\netn1\\OneDrive\\\u05e9\u05d5\u05dc\u05d7\u05df \u05d4\u05e2\u05d1\u05d5\u05d3\u05d4"
-    "\\agent-kernel\\profiles\\coding-agent.md", encoding="utf-8").read()
+KERNEL = (pathlib.Path(__file__).parent.parent
+    / "profiles" / "coding-agent.md").read_text(encoding="utf-8")
 BASELINE = "You are a helpful coding assistant."
 
 TOOLBAR = (
@@ -98,9 +98,11 @@ for name, messages in PROBES.items():
                                          headers={"Content-Type": "application/json"})
             t = time.time()
             with urllib.request.urlopen(req, timeout=900) as r:
-                results[f"{name}__{cond}__r{i+1}"] = json.load(r)["choices"][0]["message"]["content"]
+                choice = json.load(r)["choices"][0]["message"]
+                results[f"{name}__{cond}__r{i+1}"] = choice["content"]
             print(f"{name} [{cond}] run {i+1} in {time.time()-t:.0f}s "
                   f"(total {(time.time()-t0)/60:.1f}m)", flush=True)
-            with open(str(pathlib.Path(__file__).parent / "results.json"), "w", encoding="utf-8") as f:
+            results_path = pathlib.Path(__file__).parent / "results.json"
+            with open(str(results_path), "w", encoding="utf-8") as f:
                 json.dump(results, f, ensure_ascii=False, indent=1)
 print("DONE", len(results), "responses")
