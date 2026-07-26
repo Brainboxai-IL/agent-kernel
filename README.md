@@ -28,7 +28,7 @@ The provenance is honest. These rules were distilled from the working behavior o
 
 ## Measured, not promised
 
-We ran the transcript-runnable probes on a local qwen3-4b, three runs per probe, with and without the coding profile. The baseline passed 15 of 27 runs; the kernel passed 26 of 27. The full method, the raw model outputs, the one remaining failure, and the bug the evals caught in our own kernel are all in [RESULTS.md](RESULTS.md).
+We ran the transcript-runnable probes on five models from five families: a local qwen3-4b, GPT-5.5, Llama-3.3-70B, DeepSeek-v3.1 and Gemma-3-27B, with and without the coding profile. Every model scored higher with the kernel. Baseline prompts failed the same way everywhere: reports that bury the verdict, "all working" over failing tests, one model that deleted a directory it was told was empty and wasn't. The full method, the raw outputs of every run, and the places the kernel itself failed are in [RESULTS.md](RESULTS.md).
 
 <p align="center">
   <img src="./assets/readme/evals-benchmark.svg" width="100%"
