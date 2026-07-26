@@ -58,11 +58,20 @@ def build() -> None:
     PROFILES.mkdir(exist_ok=True)
     for slug, spec in PROFILE_SPECS.items():
         parts = [GENERATED_NOTE, f"# {spec['title']}", "", spec["preamble"], ""]
-        parts += [module_body(m) + "\n" for m in spec["modules"]]
+        for m in spec["modules"]:
+            mod_path = MODULES / f"{m}.md"
+            if not mod_path.exists():
+                print(f"warning: module {m}.md not found, skipping")
+                continue
+            parts.append(module_body(m) + "\n")
         out = PROFILES / f"{slug}.md"
         out.write_text("\n".join(parts), encoding="utf-8", newline="\n")
         print(f"built profiles/{slug}.md ({len(spec['modules'])} modules)")
 
 
-if __name__ == "__main__":
+def main() -> None:
     build()
+
+
+if __name__ == "__main__":
+    main()

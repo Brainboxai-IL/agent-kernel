@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-kernel"
+version = "0.1.0"
+description = "Modular behavioral kernel for LLM agents — composable rule modules, documented rationale, testable compliance"
+readme = "README.md"
+license.text = "MIT"
+requires-python = ">=3.8"
+authors = [
+    { name = "BrainboxAI", email = "hello@brainboxai.io" },
+]
+keywords = ["llm", "agents", "behavioral-prompt", "system-prompt", "ai-safety"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/Brainboxai-IL/agent-kernel"
+Repository = "https://github.com/Brainboxai-IL/agent-kernel"
+Documentation = "https://github.com/Brainboxai-IL/agent-kernel#readme"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "ruff>=0.1",
+]
+evals = [
+    "pytest>=7",
+]
+
+[tool.setuptools.packages.find]
+include = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint.per-file-ignores]
+"evals/*" = ["E501"]
+"tests/*" = ["E501"]
