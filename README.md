@@ -26,6 +26,15 @@ Compliance is measured, not assumed. [`EVALS.md`](EVALS.md) turns the spec into 
 
 The provenance is honest. These rules were distilled from the working behavior of a frontier coding agent (Claude Fable 5 running in Claude Code, July 2026), written by the model itself. Nothing here is a reconstructed "leak."
 
+## Measured, not promised
+
+We ran the transcript-runnable probes on a local qwen3-4b, three runs per probe, with and without the coding profile. The baseline passed 15 of 27 runs; the kernel passed 26 of 27. The full method, the raw model outputs, the one remaining failure, and the bug the evals caught in our own kernel are all in [RESULTS.md](RESULTS.md).
+
+<p align="center">
+  <img src="./assets/readme/evals-chart.svg" width="100%"
+       alt="Paired bar chart of nine probes: baseline prompt passes 15 of 27 runs, agent-kernel coding profile passes 26 of 27">
+</p>
+
 ## Usage
 
 Pick a profile and paste it as the system prompt:
