@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="420" height="64" viewBox="0 0 420 64"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Built by BrainboxAI</title>
+  <desc id="desc">BrainboxAI signature: a rounded box with a node, the wordmark, and brainboxai.io.</desc>
+
+  <rect width="420" height="64" rx="14" fill="#0A0E14"/>
+  <rect x="0.75" y="0.75" width="418.5" height="62.5" rx="13.25" fill="none" stroke="#24303F" stroke-width="1.5"/>
+
+  <!-- brainbox motif -->
+  <g transform="translate(20 19)">
+    <rect x="0" y="0" width="26" height="26" rx="7" fill="none" stroke="#3D8BFD" stroke-width="1.75"/>
+    <circle cx="13" cy="13" r="4" fill="#3D8BFD"/>
+  </g>
+
+  <text x="62" y="39" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="19" font-weight="700" fill="#EAF0F7">Built by BrainboxAI</text>
+
+  <text x="400" y="38" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="13" fill="#7E8BA0">brainboxai.io</text>
+</svg>
