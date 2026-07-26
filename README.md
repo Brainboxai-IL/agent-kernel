@@ -1,62 +1,54 @@
 <p align="center">
   <img src="./assets/readme/hero.svg" width="100%"
-       alt="agent-kernel by BrainboxAI — five behavioral modules composed into ready-to-use agent profiles, with documented rationale and compliance probes">
+       alt="agent-kernel by BrainboxAI: five behavioral modules composed into ready-to-use agent profiles, with documented rationale and compliance probes">
 </p>
 
-<div dir="rtl">
+## What this is
 
-## מה זה
+Most system prompts for LLM agents are piles of instructions that nobody can justify rule by rule and nobody can test. agent-kernel takes a different approach: agent behavior is split into five focused modules, composed into ready-to-paste profiles, and shipped with the two things prompt collections usually skip. Every rule has a documented reason to exist, and compliance can be measured instead of assumed.
 
-רוב ה-system prompts ל-agents הם ערימת הנחיות שאף אחד לא יודע למה היא שם ואם היא בכלל עובדת. **agent-kernel** מפרק את ההתנהגות לחמישה מודולים ממוקדים, מרכיב מהם פרופילים מוכנים להדבקה, ומצרף את שני הדברים שכמעט אף ריפו של פרומפטים לא מספק: **נימוק לכל כלל** ו-**דרך לבדוק שה-agent באמת מציית**.
+## Architecture
 
-## הארכיטקטורה
+| Layer | Contents |
+|-------|----------|
+| [`modules/`](modules) | Five behavior modules with numbered rules: [communication](modules/communication.md) (C1-C8), [autonomy](modules/autonomy.md) (A1-A6), [integrity](modules/integrity.md) (I1-I6), [caution](modules/caution.md) (S1-S6), [code](modules/code.md) (K1-K6) |
+| [`profiles/`](profiles) | Composed, ready-to-paste system prompts: `assistant`, `coding-agent`, `autonomous-agent`. Built from the modules by `build.py` |
+| [`RATIONALE.md`](RATIONALE.md) | The concrete failure mode each rule prevents. A rule without a reason is folklore |
+| [`EVALS.md`](EVALS.md) | 15 behavioral probes: the scenario, what a compliant agent does, what a violating agent does |
 
-| שכבה | מה יש בה |
-|------|----------|
-| [`modules/`](modules) | חמישה מודולי התנהגות עם כללים ממוספרים: [communication](modules/communication.md) (C1–C8), [autonomy](modules/autonomy.md) (A1–A6), [integrity](modules/integrity.md) (I1–I6), [caution](modules/caution.md) (S1–S6), [code](modules/code.md) (K1–K6) |
-| [`profiles/`](profiles) | פרופילים מורכבים מוכנים להדבקה: `assistant`, `coding-agent`, `autonomous-agent` — נבנים מהמודולים עם `build.py` |
-| [`RATIONALE.md`](RATIONALE.md) | לכל כלל: מצב הכשל הקונקרטי שהוא מונע. כלל בלי נימוק הוא פולקלור |
-| [`EVALS.md`](EVALS.md) | 15 probes התנהגותיים — תרחיש, מה עושה agent תקין, מה עושה agent שמפר |
+## What makes it different
 
-## למה זה שונה מעוד ריפו של פרומפטים
+Rules are numbered and citable. "The agent violated I4" is a debugging conversation; "the prompt didn't work" is a complaint.
 
-1. **כללים ממוספרים וניתנים לציטוט.** ‏"ה-agent הפר את I4" זו שיחת דיבאג; "הפרומפט לא עבד" זו תלונה.
-2. **נימוק מתועד.** כל כלל ב-[`RATIONALE.md`](RATIONALE.md) ממופה לכשל אמיתי שנצפה ב-agents — אפשר לערער, לבדוק ולמחוק כללים במקום לצבור אותם.
-3. **ציות נבדק, לא מונח.** ‏[`EVALS.md`](EVALS.md) הופך את הספק למדיד: מריצים את ה-probes לפני ואחרי כל שינוי פרומפט.
-4. **מקור אמיתי.** הכללים זוקקו מהתנהגות בפועל של agent ברמת frontier‏ (Claude Fable 5 בתוך Claude Code, יולי 2026) — ע"י המודל עצמו, לא מ"הדלפה" משוחזרת.
+Every rule maps to a failure. [`RATIONALE.md`](RATIONALE.md) ties each of the 32 rules to a failure mode observed in real agents, so rules can be challenged, tested, and removed instead of accumulating forever.
 
-## שימוש
+Compliance is measured, not assumed. [`EVALS.md`](EVALS.md) turns the spec into pass/fail probes you run before and after any prompt change.
 
-בוחרים פרופיל ומדביקים כ-system prompt:
+The provenance is honest. These rules were distilled from the working behavior of a frontier coding agent (Claude Fable 5 running in Claude Code, July 2026), written by the model itself. Nothing here is a reconstructed "leak."
 
-</div>
+## Usage
+
+Pick a profile and paste it as the system prompt:
 
 ```python
 system = open("profiles/coding-agent.md", encoding="utf-8").read()
-# Anthropic / OpenAI / Gemini / LM Studio / Ollama — כל ספק עם שדה system
+# Works with Anthropic, OpenAI, Gemini, LM Studio, Ollama:
+# any provider with a system field.
 ```
 
-<div dir="rtl">
-
-מרכיבים וריאציה משלכם — עורכים את `PROFILE_SPECS` ובונים מחדש:
-
-</div>
+To compose your own variant, edit `PROFILE_SPECS` in `build.py` and rebuild:
 
 ```bash
 python build.py
 ```
 
-<div dir="rtl">
+Always edit `modules/`. The files in `profiles/` are generated and get overwritten on every build.
 
-עורכים תמיד את `modules/` — קבצי `profiles/` נוצרים אוטומטית ונדרסים בבנייה.
+## Known limitation
 
-## מגבלה שכדאי להכיר
-
-פרומפט התנהגותי משפר תקשורת ושיפוט; הוא לא מחליף harness. כלים, לולאת agent, הרשאות ו-sandboxing קובעים לא פחות ממה שכתוב ב-system prompt — ולכן יש EVALS: אל תניחו ציות, תמדדו אותו.
-
-</div>
+A behavioral prompt improves communication and judgment. It does not replace a harness. Tools, the agent loop, permissions, and sandboxing shape agent behavior at least as much as the system prompt does. That is why `EVALS.md` exists: measure compliance, don't assume it.
 
 <p align="center">
   <img src="./assets/readme/brainbox-footer.svg" width="320"
-       alt="Built by BrainboxAI — brainboxai.io">
+       alt="Built by BrainboxAI, brainboxai.io">
 </p>
