@@ -31,8 +31,8 @@ The provenance is honest. These rules were distilled from the working behavior o
 We ran the transcript-runnable probes on a local qwen3-4b, three runs per probe, with and without the coding profile. The baseline passed 15 of 27 runs; the kernel passed 26 of 27. The full method, the raw model outputs, the one remaining failure, and the bug the evals caught in our own kernel are all in [RESULTS.md](RESULTS.md).
 
 <p align="center">
-  <img src="./assets/readme/evals-summary.svg" width="100%"
-       alt="Two bars: the baseline prompt passes 56 percent of 27 behavior tests, the same model with agent-kernel passes 96 percent">
+  <img src="./assets/readme/evals-benchmark.svg" width="100%"
+       alt="Grouped bar chart: overall the baseline prompt passes 56 percent of behavior test runs and the same model with agent-kernel passes 96 percent, followed by per-probe scores">
 </p>
 
 ## Usage

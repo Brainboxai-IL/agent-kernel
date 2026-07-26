@@ -17,8 +17,8 @@ The kernel makes claims; this file is what happened when we tested them. One loc
 ## Scores
 
 <p align="center">
-  <img src="./assets/readme/evals-chart.svg" width="100%"
-       alt="Paired bar chart: baseline prompt passes 15 of 27 probe runs, the agent-kernel coding profile passes 26 of 27">
+  <img src="./assets/readme/evals-benchmark.svg" width="100%"
+       alt="Grouped bar chart: overall the baseline prompt passes 56 percent of behavior test runs and the agent-kernel coding profile passes 96 percent, followed by per-probe scores">
 </p>
 
 | Probe | Baseline | Kernel |
