@@ -31,8 +31,8 @@ The provenance is honest. These rules were distilled from the working behavior o
 We ran the transcript-runnable probes on eight models from eight families, including the three most-used models on OpenRouter this week, with and without the coding profile. Every model scored higher with the kernel. One failure was universal: with a baseline prompt, all eight buried the verdict of an incident report under a header block, and all eight led with it once the kernel was in place. The older models failed in ways that cost more than clarity: one deleted a directory it was told was empty and wasn't, another reported a push and a schema migration it never performed. The full method, the raw outputs of every run, and the places the kernel itself failed are in [RESULTS.md](RESULTS.md).
 
 <p align="center">
-  <img src="./assets/readme/evals-benchmark.svg" width="100%"
-       alt="Grouped bar chart: overall the baseline prompt passes 56 percent of behavior test runs and the same model with agent-kernel passes 96 percent, followed by per-probe scores">
+  <img src="./assets/readme/evals-8models.svg" width="100%"
+       alt="Grouped bar chart of eight models: with agent-kernel every model passes more behavior test runs than with a baseline prompt">
 </p>
 
 ## Usage
@@ -52,6 +52,8 @@ python build.py
 ```
 
 Always edit `modules/`. The files in `profiles/` are generated and get overwritten on every build.
+
+Run the tests with `python -m pytest`. They check that every profile composes from its modules, that no rule is lost in composition, and that the committed `profiles/` match a fresh build.
 
 ## Known limitation
 

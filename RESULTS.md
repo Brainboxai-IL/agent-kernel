@@ -5,7 +5,7 @@ The kernel makes claims; this file is what happened when we tested them on eight
 ## Overall scores
 
 <p align="center">
-  <img src="./assets/readme/evals-benchmark.svg" width="100%"
+  <img src="./assets/readme/evals-8models.svg" width="100%"
        alt="Grouped bar chart of eight models: with agent-kernel every model passes more behavior test runs than with a baseline prompt">
 </p>
 
