@@ -50,8 +50,11 @@ def test_rules_survive_composition(tmp_path, monkeypatch):
     text = (tmp_path / "coding-agent.md").read_text(encoding="utf-8")
     for name in build.PROFILE_SPECS["coding-agent"]["modules"]:
         source = (build.MODULES / f"{name}.md").read_text(encoding="utf-8")
-        ids = [ln.split()[1] for ln in source.splitlines() if ln.startswith("## ")
-               and ln[3:4].isalpha() and ln.split()[1][1:].split()[0].isdigit()]
+        ids = [
+            ln.split()[1]
+            for ln in source.splitlines()
+            if ln.startswith("## ") and ln[3:4].isalpha() and ln.split()[1][1:].split()[0].isdigit()
+        ]
         for rule_id in ids:
             assert f"### {rule_id}" in text, f"rule {rule_id} lost from {name}"
 

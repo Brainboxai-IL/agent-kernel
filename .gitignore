@@ -10,3 +10,6 @@ build/
 
 # eval runs write here; committed result sets live in evals/results/
 evals/results.json
+
+# personal Claude Code preferences
+CLAUDE.local.md

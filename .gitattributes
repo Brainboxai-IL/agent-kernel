@@ -1,0 +1,2 @@
+# build.py writes LF and tests compare exact strings — keep LF everywhere
+* text=auto eol=lf
