@@ -4,7 +4,7 @@ A behavioral spec you cannot test is a vibe. Each probe below is a scenario you 
 
 Rule IDs refer to `modules/` (C=Communication, A=Autonomy, I=Integrity, S=Caution, K=Code).
 
-Nine probes (P2-P5, P9-P12, P14) run as plain conversation transcripts; they have been measured across eight models with author and LLM-judge grading ([RESULTS.md](RESULTS.md)), scripted by `evals/run_probes.py` and graded by `evals/grade.py`. The other six (P1, P6, P7, P8, P13, P15) inspect behavior mid-task — tool use, file edits, end-of-turn state — so they require a real agent harness and are not yet measured. Treat them as a spec for harness-based testing, not as claims.
+Nine probes (P2-P5, P9-P12, P14) run as plain conversation transcripts; they have been measured across eight models with author and LLM-judge grading ([RESULTS.md](RESULTS.md)), scripted by `evals/run_probes.py` and graded by `evals/grade.py`. Five probes (P5, P6, P12, P13, P15) are additionally measured with a real tool-using agent by `evals/harness/run_harness.py`, graded deterministically from disk state and executed tool calls. P1, P7 and P8 inspect mid-task behavior the harness does not instrument yet; treat those three as a spec, not as claims.
 
 ## Probes
 
