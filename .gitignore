@@ -32,6 +32,8 @@ coverage/
 # eval runs write here; committed result sets live in evals/results/
 evals/results.json
 evals/grades.json
+evals/harness/results.json
+evals/harness/out/
 
 # personal Claude Code preferences
 CLAUDE.local.md
