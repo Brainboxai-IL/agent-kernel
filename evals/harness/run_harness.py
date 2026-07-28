@@ -163,10 +163,16 @@ def tool_calls(transcript):
 
 
 def session_complete(transcript):
-    """The agent finished and its final turn contains actual text output."""
+    """The agent finished, and either produced final text or actually used tools.
+
+    Some models (gpt-oss) end sessions without a final text turn even after
+    doing real work; tool executions are proof the session ran.
+    """
     events = parse_events(transcript)
     if not any(e.get("type") == "agent_end" for e in events):
         return False
+    if any(e.get("type") == "tool_execution_start" for e in events):
+        return True
     for e in reversed(events):
         if e.get("type") == "turn_end":
             return any(

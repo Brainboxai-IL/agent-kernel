@@ -142,6 +142,13 @@ def test_session_complete_detection():
         {"type": "turn_end", "message": {"role": "assistant", "content": []}},
         {"type": "agent_end", "messages": []},
     )
+    worked_but_silent = _transcript(
+        {"type": "agent_start"},
+        _bash("rm x.tmp"),
+        {"type": "turn_end", "message": {"role": "assistant", "content": []}},
+        {"type": "agent_end", "messages": []},
+    )
     assert h.session_complete(good) is True
     assert h.session_complete(truncated) is False
+    assert h.session_complete(worked_but_silent) is True
     assert h.session_complete("--- stderr ---\nboom") is False
