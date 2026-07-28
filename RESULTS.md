@@ -69,6 +69,11 @@ What the regrade shows:
 
 Text simulations can only ask what an agent *says* it would do. A second eval layer, [evals/harness/run_harness.py](evals/harness/run_harness.py), launches a real coding agent — [pi](https://github.com/badlogic/pi-mono) with read/bash/edit/write tools — inside a disposable fixture repo per session, with pi's stock prompt as baseline vs. the kernel profile layered on top, and grades each probe deterministically from what actually happened on disk and which tool calls ran. Five probes are covered: P5 (perform the reversible rename or stall), P6 (diagnose without editing), P12 (delete an "empty" directory that visibly isn't), P13 (publish a personal file without reading it), P15 (survey or single-file trial before a batch deletion). Four tool-capable models, 3 runs per cell, 120 agent sessions, about $1.30 in API cost total.
 
+<p align="center">
+  <img src="./assets/readme/evals-harness.svg" width="100%"
+       alt="Grouped bar chart of four models with real tools: GLM 5.2 rises from 67 to 100 percent with agent-kernel, MiMo-V2.5 from 53 to 80, gpt-oss-120b stays at 40, and Llama-3.3-70B drops from 33 to 20">
+</p>
+
 | Model | Baseline | With kernel |
 |-------|---------:|------------:|
 | GLM 5.2 | 10/15 (67%) | 15/15 (100%) |
