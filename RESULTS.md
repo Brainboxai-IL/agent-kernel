@@ -30,13 +30,40 @@ Run counts differ per model because the method is adaptive: every probe was scre
 | Probes | the 9 of 15 that work as single-conversation transcripts (P2, P3, P4, P5, P9, P10, P11, P12, P14) |
 | Sessions | qwen3-4b via LM Studio (CPU); GPT-5.5 via a pi/Codex session; the other six via OpenRouter with a true system role |
 | Sampling | temperature 0.8, max 700 tokens, adaptive confirmation to 3 runs on gaps |
-| Grading | pass/fail per the written criteria in EVALS.md, graded by the kernel's author |
+| Grading | pass/fail per the written criteria in EVALS.md, graded by the kernel's author; independently re-graded by an LLM judge (see Automated regrade) |
 | Reproduce | `python evals/run_probes.py` against any OpenAI-compatible endpoint |
 | Cost | OpenRouter total, 162 calls across 6 models: under $0.10 |
 
 GPT-5.5 caveat: that harness has no separate system role, so the profile was prepended to the user message as a binding instructions block. The other seven models received it as a true system prompt.
 
 Tencent Hy3 was attempted and dropped: as a reasoning model it exhausted the token budget before emitting an answer in most cells, and raising the budget made each call too slow to finish the grid. No Hy3 data is reported.
+
+## Automated regrade
+
+Every cell above was re-graded by an independent LLM judge: `openai/gpt-oss-120b` at temperature 0, chosen because it is not one of the evaluated models and is cheap enough that anyone can rerun it (252 calls, about $0.03). The judge reads each probe's pass/fail criterion parsed straight from [EVALS.md](EVALS.md), the conversation the model received, and the model's response. Judge outputs are committed in [evals/results/grades/](evals/results/grades); reproduce with:
+
+```
+JUDGE_API=https://openrouter.ai/api/v1/chat/completions JUDGE_API_KEY=... \
+JUDGE_MODEL=openai/gpt-oss-120b python evals/grade.py evals/results/<file>.json
+```
+
+| Model | Judge: baseline | Judge: kernel | Author: baseline | Author: kernel |
+|-------|----------------:|--------------:|-----------------:|---------------:|
+| MiMo-V2.5 | 11/15 | 14/15 | 9/15 | 15/15 |
+| DeepSeek V4 Flash | 8/11 | 7/11 | 9/11 | 11/11 |
+| GLM 5.2 | 9/13 | 11/13 | 9/13 | 13/13 |
+| GPT-5.5 | 6/13 | 12/13 | 7/13 | 13/13 |
+| Llama-3.3-70B | 6/15 | 13/15 | 7/15 | 14/15 |
+| DeepSeek-chat-v3.1 | 10/17 | 16/17 | 7/17 | 17/17 |
+| Gemma-3-27B | 7/13 | 10/13 | 8/13 | 10/13 |
+| qwen3-4b-instruct | 20/27 | 23/27 | 15/27 | 26/27 |
+
+What the regrade shows:
+
+- **The headline result reproduces.** The kernel beats its baseline on all eight models under the independent judge as well.
+- **Every kernel failure the author reported, the judge found too** — all five cells, including the documented Gemma P11 roleplay failure (the same three runs) and the Llama P3 dropped deadline.
+- **Kernel-cell agreement is 111/124 (~90%).** All 13 disagreements are the judge being stricter than the author. Seven are P5, a genuine judgment call: when a model with no real tools answers "I'm blocked from editing here; with tools I would do exactly this," the author graded the commitment as performing the step, the judge grades it as not performing. Six are severity calls on P3/P4 style (sentence fragments, report-style openings).
+- **The judge caught one author error.** DeepSeek V4 Flash's P9 kernel response was cut off by the token budget and names only one of the two failing tests; the author passed it, the judge correctly failed it. The main table keeps the author's grade — treat that cell as disputed.
 
 ## What the runs showed
 
@@ -61,6 +88,6 @@ Reporting these is the point of the project.
 
 - Eight models is a pattern, not a proof. All runs are text-transcript simulations without real tools; the six harness-dependent probes (P1, P6, P7, P8, P13, P15) remain untested.
 - Adaptive screening means tie cells rest on a single run each.
-- Graded by the kernel's author against the written criteria. Raw outputs are in [evals/results/](evals/results) so you can regrade every cell.
+- Graded by the kernel's author against the written criteria. Raw outputs are in [evals/results/](evals/results) so you can regrade every cell; an independent LLM judge agreed on ~90% of kernel cells (see Automated regrade).
 - The GPT-5.5 condition used an instructions block, not a true system role.
 - Percentages come from small denominators (11 to 27 runs per model). Treat them as direction, not precision.

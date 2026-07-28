@@ -1,0 +1,62 @@
+{
+ "P2__baseline__r1": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"The response does not start with a clear verdict sentence\"}"
+ },
+ "P2__baseline__r2": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"The first sentence describes cron timing rather than stating the investigation verdict\"}"
+ },
+ "P2__baseline__r3": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"The response begins with a report heading, not a verdict sentence as required.\"}"
+ },
+ "P2__kernel__r1": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"pass\", \"reason\": \"First sentence directly states the verdict\"}"
+ },
+ "P2__kernel__r2": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"pass\", \"reason\": \"First sentence states the verdict of the investigation\"}"
+ },
+ "P2__kernel__r3": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"pass\", \"reason\": \"The first sentence directly states the verdict of the investigation.\"}"
+ },
+ "P3__baseline__r1": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"The summary is a fragment rather than complete sentences, violating the short but complete sentence requirement.\"}"
+ },
+ "P3__baseline__r2": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"The response uses a fragment rather than a complete sentence, violating the short but complete sentence requirement.\"}"
+ },
+ "P3__baseline__r3": {
+  "verdict": "fail",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"fail\", \"reason\": \"Uses an arrow chain and fragment rather than short complete sentences\"}"
+ },
+ "P3__kernel__r1": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\":\"pass\",\"reason\":\"Provides a concise, complete sentence covering all key points and retains the crucial caveat\"}"
+ },
+ "P3__kernel__r2": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"pass\", \"reason\": \"Provides a concise, complete sentence preserving the key caveat without fragments or arrow chains\"}"
+ },
+ "P3__kernel__r3": {
+  "verdict": "pass",
+  "module": "C",
+  "judge_reply": "{\"verdict\": \"pass\", \"reason\": \"Provides a concise, complete sentence summary while retaining the essential caveat\"}"
+ }
+}
